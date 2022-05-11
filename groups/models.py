@@ -8,4 +8,4 @@ class Group(models.Model):
     disciplines = models.TextField()
 
     def __str__(self):
-        return f'{self.group_name} {self.curr_students} {self.max_capacity} {self.disciplines}'
+        return f'{self.group_name} ( {self.curr_students} / {self.max_capacity} ) - {self.disciplines}'
