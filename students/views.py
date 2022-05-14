@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-
 from .forms import StudentCreateForm
 from .models import Student
 from .utils import qs2html
@@ -17,7 +16,8 @@ def index(request):
     {
         'first_name': Str(required=False),
         'last_name': Str(required=False),
-        'age': Int(required=False)
+        'age': Int(required=False),
+        'phone_number': Int(required=False)
     },
     location='query'
 )
@@ -34,6 +34,8 @@ def students(request, args):
         <input type="text" id="lname" name="last_name" placeholder="Doe"><br><br>
         <label for="age">Age:</label><br>
         <input type="number" id="age_id" name="age" placeholder="33"><br><br>
+        <label for="phone">Phone Number:</label><br>
+        <input type="number" id="phone_number" name="phone_number" placeholder="380*********"><br><br>
         <input type="submit" value="Submit">
     </form> 
     """

@@ -1,15 +1,19 @@
+from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
 from faker import Faker
 
+from teachers.validators import phone_number_validator
+
 
 class Teacher(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    discipline = models.TextField()
-    age = models.PositiveIntegerField()
+    first_name = models.CharField(max_length=50, verbose_name='First Name', validators=[MinLengthValidator(2)])
+    last_name = models.CharField(max_length=50, verbose_name='Last Name', validators=[MinLengthValidator(2)])
+    discipline = models.CharField(max_length=100)
+    age = models.PositiveSmallIntegerField()
+    phone_number = models.CharField(max_length=20, null=True, validators=[phone_number_validator, MinLengthValidator(3)])
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} {self.age} - {self.discipline}'
+        return f'{self.first_name} {self.last_name} {self.age} ({self.phone_number}) - {self.discipline}'
 
     @staticmethod
     def gen_teachers(cnt=10):
