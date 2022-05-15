@@ -8,9 +8,8 @@ class TeacherCreateForm(forms.ModelForm):
         fields = [
             'first_name',
             'last_name',
-            'discipline',
-            'age',
-            'phone_number'
+            'phone_number',
+            'subject'
         ]
 
     def clean_first_name(self):

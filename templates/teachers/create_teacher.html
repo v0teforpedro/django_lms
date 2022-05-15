@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block main %}
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <input autocomplete="off" type="submit" value="Create">
+        <a href="{% url 'students' %}">Cancel</a>
+    </form>
+{% endblock %}

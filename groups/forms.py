@@ -9,7 +9,7 @@ class GroupCreateForm(forms.ModelForm):
             'group_name',
             'max_capacity',
             'curr_students',
-            'disciplines'
+            'subjects'
         ]
 
 
