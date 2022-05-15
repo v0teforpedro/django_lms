@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-sm-4 ms-auto me-auto">
+            <p style="text-align: center">Click on teacher to edit</p>
+            <ul class="list-group list-group-flush">
+                {% for teacher in teachers %}
+                    <a href="delete/{{ teacher.pk }}">Delete</a>
+                    <a href="update/{{ teacher.pk }}" class="list-group-item list-group-item-action">{{ teacher }}</a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

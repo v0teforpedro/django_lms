@@ -5,14 +5,14 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 from faker import Faker
 
-from students.validators import adult_validator, phone_number_validator
+from students.validators import phone_number_validator, AdultValidator
 
 
 class Student(models.Model):
     first_name = models.CharField(max_length=50, verbose_name='First Name', validators=[MinLengthValidator(2)])
     last_name = models.CharField(max_length=50, verbose_name='Last Name', validators=[MinLengthValidator(2)])
     age = models.PositiveSmallIntegerField()
-    birthday = models.DateField(default=datetime.date.today, validators=[adult_validator])
+    birthday = models.DateField(default=datetime.date.today, validators=[AdultValidator(20)])
     phone_number = models.CharField(max_length=20, null=True, validators=[phone_number_validator, MinLengthValidator(3)])
 
     class Meta:
