@@ -1,21 +1,17 @@
 from django import forms
-from .models import Student
+from .models import Teacher
 
 
-class StudentCreateForm(forms.ModelForm):
+class TeacherCreateForm(forms.ModelForm):
     class Meta:
-        model = Student
+        model = Teacher
         fields = [
             'first_name',
             'last_name',
+            'discipline',
             'age',
-            'birthday',
             'phone_number'
         ]
-
-        widgets = {
-            'birthday': forms.DateInput(attrs={'type': 'date'})
-        }
 
     def clean_first_name(self):
         fn = self.cleaned_data['first_name']
