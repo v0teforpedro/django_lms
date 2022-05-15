@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-sm-4 ms-auto me-auto">
+            <p style="text-align: center">Click on group to edit</p>
+            <ul class="list-group list-group-flush">
+                {% for group in groups %}
+                    <a href="delete/{{ group.pk }}">Delete</a>
+                    <a href="update/{{ group.pk }}" class="list-group-item list-group-item-action">{{ group }}</a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

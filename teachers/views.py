@@ -1,10 +1,19 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from .forms import TeacherCreateForm
 from .models import Teacher
 from webargs.fields import Int
 from webargs.djangoparser import use_args
+
+
+def teachers(request):
+    tch = Teacher.objects.all()
+    return render(
+        request,
+        'teachers/teachers.html',
+        context={'title': 'List of Teachers', 'teachers': tch}
+    )
 
 
 @use_args(
@@ -43,3 +52,31 @@ def create_teacher(request):
         """
 
     return HttpResponse(html_form)
+
+
+@csrf_exempt
+def update_teacher(request, pk):
+    teacher = Teacher.objects.get(pk=pk)
+    if request.method == 'GET':
+        form = TeacherCreateForm(instance=teacher)
+    else:
+        form = TeacherCreateForm(request.POST, instance=teacher)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/teachers')
+
+    html_form = f"""
+        <form method="post">
+            <table>
+                {form.as_table()}
+            </table>
+            <input type="submit" value="Update">
+        </form> 
+        """
+
+    return HttpResponse(html_form)
+
+
+def delete_teacher(request, pk):
+    Teacher.objects.filter(pk=pk).delete()
+    return HttpResponseRedirect('/teachers')
