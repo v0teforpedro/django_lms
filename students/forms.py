@@ -8,7 +8,6 @@ class StudentCreateForm(forms.ModelForm):
         fields = [
             'first_name',
             'last_name',
-            'age',
             'birthday',
             'phone_number'
         ]
