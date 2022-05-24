@@ -1,10 +1,9 @@
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
+
 from .forms import StudentCreateForm
 from .models import Student
-from webargs.fields import Str, Int
-from webargs.djangoparser import use_args
 
 
 def create_student(request):
@@ -14,7 +13,7 @@ def create_student(request):
         form = StudentCreateForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('students'))
+            return HttpResponseRedirect(reverse('students:list'))
 
     return render(
         request,
@@ -23,19 +22,8 @@ def create_student(request):
     )
 
 
-@use_args(
-    {
-        'first_name': Str(required=False),
-        'last_name': Str(required=False),
-        'age': Int(required=False),
-        'phone_number': Int(required=False)
-    },
-    location='query'
-)
-def students(request, args):
+def students(request):
     st = Student.objects.all()
-    for key, value in args.items():
-        st = st.filter(**{key: value})
     return render(
         request,
         'students/students.html',
@@ -51,7 +39,7 @@ def update_student(request, pk):
         form = StudentCreateForm(request.POST, instance=student)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('students'))
+            return HttpResponseRedirect(reverse('students:list'))
 
     return render(
         request,
@@ -64,6 +52,6 @@ def delete_student(request, pk):
     student = Student.objects.get(pk=pk)
     if request.method == 'POST':
         student.delete()
-        return HttpResponseRedirect(reverse('students'))
+        return HttpResponseRedirect(reverse('students:list'))
     else:
         return render(request, 'confirmation.html', {'object': student})

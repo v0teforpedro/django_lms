@@ -1,10 +1,12 @@
-from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
+
+from webargs.djangoparser import use_args
+from webargs.fields import Int
+
 from .forms import TeacherCreateForm
 from .models import Teacher
-from webargs.fields import Int
-from webargs.djangoparser import use_args
 
 
 def create_teacher(request):
@@ -14,7 +16,7 @@ def create_teacher(request):
         form = TeacherCreateForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Teacher Created!</h1>')
+            return HttpResponseRedirect(reverse('teachers:list'))
 
     return render(
         request,
@@ -40,7 +42,7 @@ def update_teacher(request, pk):
         form = TeacherCreateForm(request.POST, instance=teacher)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('teachers'))
+            return HttpResponseRedirect(reverse('teachers:list'))
 
     return render(
         request,
@@ -53,7 +55,7 @@ def delete_teacher(request, pk):
     teacher = Teacher.objects.get(pk=pk)
     if request.method == 'POST':
         teacher.delete()
-        return HttpResponseRedirect(reverse('teachers'))
+        return HttpResponseRedirect(reverse('teachers:list'))
     else:
         return render(request, 'confirmation.html', {'object': teacher})
 

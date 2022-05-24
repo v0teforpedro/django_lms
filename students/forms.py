@@ -1,4 +1,5 @@
 from django import forms
+
 from .models import Student
 
 
@@ -8,8 +9,8 @@ class StudentCreateForm(forms.ModelForm):
         fields = [
             'first_name',
             'last_name',
-            'birthday',
-            'phone_number'
+            'phone_number',
+            'birthday'
         ]
 
         widgets = {

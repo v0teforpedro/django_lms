@@ -1,4 +1,5 @@
 from django import forms
+
 from .models import Group
 
 
@@ -11,5 +12,3 @@ class GroupCreateForm(forms.ModelForm):
             'curr_students',
             'subjects'
         ]
-
-

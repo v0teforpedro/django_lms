@@ -130,3 +130,9 @@ dmypy.json
 
 # Pycharm
 .idea/
+
+# migrations
+migrations/
+
+# flake8
+.flake8
