@@ -14,4 +14,10 @@
             </div>
         </form>
     </div>
+    <br>
+    <h3>List of students in this group:</h3>
+    <br>
+    {% with list_object=group.students.all group_on=False %}
+        {% include 'includes/students_table.html' %}
+    {% endwith %}
 {% endblock %}

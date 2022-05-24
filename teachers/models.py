@@ -3,6 +3,8 @@ from django.db import models
 
 from faker import Faker
 
+from groups.models import Group
+
 from .validators import phone_number_validator
 
 
@@ -26,6 +28,7 @@ class Teacher(models.Model):
         null=True,
         validators=[phone_number_validator, MinLengthValidator(3)]
     )
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name='teachers')
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} ({self.phone_number}): {self.subject}'

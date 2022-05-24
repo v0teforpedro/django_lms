@@ -133,6 +133,3 @@ dmypy.json
 
 # migrations
 migrations/
-
-# flake8
-.flake8

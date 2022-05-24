@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
 from webargs.djangoparser import use_args
@@ -35,7 +35,7 @@ def teachers(request):
 
 
 def update_teacher(request, pk):
-    teacher = Teacher.objects.get(pk=pk)
+    teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'GET':
         form = TeacherCreateForm(instance=teacher)
     else:
