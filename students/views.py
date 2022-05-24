@@ -1,8 +1,8 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from .forms import StudentCreateForm
+from .forms import StudentCreateForm, StudentFilterForm
 from .models import Student
 
 
@@ -24,15 +24,17 @@ def create_student(request):
 
 def students(request):
     st = Student.objects.all()
+    students_filter = StudentFilterForm(data=request.GET, queryset=st)
+
     return render(
         request,
         'students/students.html',
-        context={'title': 'List of Students', 'students': st}
+        context={'title': 'List of Students', 'students_filter': students_filter}
     )
 
 
 def update_student(request, pk):
-    student = Student.objects.get(pk=pk)
+    student = get_object_or_404(Student, pk=pk)
     if request.method == 'GET':
         form = StudentCreateForm(instance=student)
     else:

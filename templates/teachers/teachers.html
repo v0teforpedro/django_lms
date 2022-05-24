@@ -3,7 +3,12 @@
 {% block title %} {{ title }} {% endblock %}
 
 {% block main %}
-    <table class="table table-hover">
+    <div class="d-flex justify-content-center">
+        <input class="form-control w-25" style="display: none" id="myInput" type="text" placeholder="Search...">
+    </div>
+    <br>
+    <br>
+    <table class="table table-sm table-hover">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -11,11 +16,12 @@
                 <th scope="col">Last Name</th>
                 <th scope="col">Phone Number</th>
                 <th scope="col">Subject</th>
+                <th scope="col">Group</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tableData">
         {% for teacher in teachers %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
@@ -23,6 +29,7 @@
                 <td>{{ teacher.last_name }}</td>
                 <td>{{ teacher.phone_number }}</td>
                 <td>{{ teacher.subject }}</td>
+                <td>{{ teacher.group }}</td>
                 <td>
                     <a class="btn btn-outline-dark btn-sm" href="{% url 'teachers:update' teacher.pk %}">
                         <i class="bi bi-pencil-fill"></i>
@@ -37,4 +44,6 @@
         {% endfor %}
         </tbody>
     </table>
+    <script src="/static/js/toggle.js"></script>
+    <script src="/static/js/search.js"></script>
 {% endblock %}

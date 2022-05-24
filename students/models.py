@@ -10,6 +10,8 @@ from django.db import models
 
 from faker import Faker
 
+from groups.models import Group
+
 from .validators import phone_number_validator
 
 
@@ -33,6 +35,7 @@ class Student(models.Model):
         null=True,
         validators=[phone_number_validator, MinLengthValidator(3)]
     )
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name='students')
 
     class Meta:
         verbose_name = 'student'

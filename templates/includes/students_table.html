@@ -1,0 +1,42 @@
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Birthday</th>
+            <th scope="col">Age</th>
+            {% if group_on %}
+                <th scope="col">Group</th>
+            {% endif %}
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    <tbody id="tableData">
+    {% for student in list_object %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ student.first_name }}</td>
+            <td>{{ student.last_name }}</td>
+            <td>{{ student.phone_number }}</td>
+            <td>{{ student.birthday }}</td>
+            <td>{{ student.get_age }}</td>
+            {% if group_on %}
+                <td>{{ student.group}}</td>
+            {% endif %}
+            <td>
+                <a class="btn btn-outline-dark btn-sm" href="{% url 'students:update' student.pk %}">
+                    <i class="bi bi-pencil-fill"></i>
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-outline-dark btn-sm" href="{% url 'students:delete' student.pk %}">
+                    <i class="bi bi-trash-fill"></i>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

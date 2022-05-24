@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
 from .forms import GroupCreateForm
@@ -32,7 +32,7 @@ def groups(request):
 
 
 def update_group(request, pk):
-    group = Group.objects.get(pk=pk)
+    group = get_object_or_404(Group, pk=pk)
     if request.method == 'GET':
         form = GroupCreateForm(instance=group)
     else:
@@ -44,7 +44,7 @@ def update_group(request, pk):
     return render(
         request,
         'groups/update_group.html',
-        context={'title': 'Update Grou[', 'form': form}
+        context={'title': 'Update Group', 'form': form, 'group': group}
     )
 
 
