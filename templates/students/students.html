@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% load static %}
+
 {% load crispy_forms_filters %}
 
 {% block title %} {{ title }} {% endblock %}
@@ -34,6 +36,6 @@
     {% with list_object=students_filter.qs group_on=True %}
         {% include 'includes/students_table.html' %}
     {% endwith %}
-    <script src="/static/js/toggle.js"></script>
-    <script src="/static/js/search.js"></script>
+    <script src="{% static 'js/toggle.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
 {% endblock %}

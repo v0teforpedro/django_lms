@@ -12,29 +12,27 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Group Name</th>
-                <th scope="col">Headman</th>
-                <th scope="col">Capacity</th>
-                <th scope="col">Course</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Hours</th>
+                <th scope="col">Group</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
             </tr>
         </thead>
         <tbody id="tableData">
-        {% for group in groups %}
+        {% for course in courses %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ group.group_name }}</td>
-                <td>{{ group.headman.first_name }} {{ group.headman.last_name }}</td>
-                <td>{{ group.max_capacity }}</td>
-                <td>{{ group.group_course }}</td>
+                <td>{{ course.course_name }}</td>
+                <td>{{ course.hours }}</td>
+                <td>{{ course.group.group_name }} ({{ course.group.max_capacity }} attendants)</td>
                 <td>
-                    <a class="btn btn-outline-dark btn-sm" href="{% url 'groups:update' group.pk %}">
+                    <a class="btn btn-outline-dark btn-sm" href="{% url 'courses:update' course.pk %}">
                         <i class="bi bi-pencil-fill"></i>
                     </a>
                 </td>
                 <td>
-                    <a class="btn btn-outline-dark btn-sm" href="{% url 'groups:delete' group.pk %}">
+                    <a class="btn btn-outline-dark btn-sm" href="{% url 'courses:delete' course.pk %}">
                         <i class="bi bi-trash-fill"></i>
                     </a>
                 </td>

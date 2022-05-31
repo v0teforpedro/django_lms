@@ -1,11 +1,9 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from webargs.djangoparser import use_args
-from webargs.fields import Int
 
-from .forms import TeacherCreateForm
+from .forms import TeacherCreateForm, TeacherUpdateForm
 from .models import Teacher
 
 
@@ -37,9 +35,9 @@ def teachers(request):
 def update_teacher(request, pk):
     teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'GET':
-        form = TeacherCreateForm(instance=teacher)
+        form = TeacherUpdateForm(instance=teacher)
     else:
-        form = TeacherCreateForm(request.POST, instance=teacher)
+        form = TeacherUpdateForm(request.POST, instance=teacher)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('teachers:list'))
@@ -58,19 +56,3 @@ def delete_teacher(request, pk):
         return HttpResponseRedirect(reverse('teachers:list'))
     else:
         return render(request, 'confirmation.html', {'object': teacher})
-
-
-@use_args(
-    {
-        'cnt': Int(required=False)
-    },
-    location='query'
-)
-def generate_teachers(request, args):
-    if args:
-        for key, value in args.items():
-            Teacher.gen_teachers(**{key: value})
-            return HttpResponse(f'Successfully generated {value} teacher(s)!')
-    else:
-        Teacher.gen_teachers()
-        return HttpResponse('Successfully generated 10 teachers!')

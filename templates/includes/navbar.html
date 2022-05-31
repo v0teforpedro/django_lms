@@ -14,6 +14,7 @@
                 <li class="nav-item"><a class="nav-link" href="/students">Students</a></li>
                 <li class="nav-item"><a class="nav-link" href="/teachers">Teachers</a></li>
                 <li class="nav-item"><a class="nav-link" href="/groups">Groups</a></li>
+                <li class="nav-item"><a class="nav-link" href="/courses">Courses</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -23,11 +24,12 @@
                         <li><a class="dropdown-item" href="{% url 'students:create' %}">Create Student</a></li>
                         <li><a class="dropdown-item" href="{% url 'teachers:create' %}">Create Teacher</a></li>
                         <li><a class="dropdown-item" href="{% url 'groups:create' %}">Create Group</a></li>
+                        <li><a class="dropdown-item" href="{% url 'courses:create' %}">Create Course</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
-        {% if '/teachers/' == request.path or '/students/' == request.path or '/groups/' == request.path %}
+        {% if '/teachers/' == request.path or '/students/' == request.path %}
         <form class="d-flex" id="sidebar">
             <button class="btn btn-outline-dark btn-sm" id="toggle" type="button">Search: On / Off</button>
         </form>
