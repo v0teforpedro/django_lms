@@ -1,58 +1,33 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
-
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from .forms import TeacherCreateForm, TeacherUpdateForm
 from .models import Teacher
 
 
-def create_teacher(request):
-    if request.method == 'GET':
-        form = TeacherCreateForm()
-    else:
-        form = TeacherCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('teachers:list'))
-
-    return render(
-        request,
-        'teachers/create_teacher.html',
-        context={'title': 'Create Teacher', 'form': form}
-    )
+class CreateTeacherView(CreateView):
+    model = Teacher
+    success_url = reverse_lazy('teachers:list')
+    template_name = 'teachers/create_teacher.html'
+    form_class = TeacherCreateForm
+    extra_context = {'title': 'Create Teacher'}
 
 
-def teachers(request):
-    tch = Teacher.objects.all()
-    return render(
-        request,
-        'teachers/teachers.html',
-        context={'title': 'List of Teachers', 'teachers': tch}
-    )
+class ListTeacherView(ListView):
+    model = Teacher
+    template_name = 'teachers/teachers.html'
+    extra_context = {'title': 'List of Teachers'}
 
 
-def update_teacher(request, pk):
-    teacher = get_object_or_404(Teacher, pk=pk)
-    if request.method == 'GET':
-        form = TeacherUpdateForm(instance=teacher)
-    else:
-        form = TeacherUpdateForm(request.POST, instance=teacher)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('teachers:list'))
-
-    return render(
-        request,
-        'teachers/update_teacher.html',
-        context={'title': 'Update Teacher', 'form': form}
-    )
+class UpdateTeacherView(UpdateView):
+    model = Teacher
+    success_url = reverse_lazy('teachers:list')
+    template_name = 'teachers/update_teacher.html'
+    form_class = TeacherUpdateForm
+    extra_context = {'title': 'Update Teacher'}
 
 
-def delete_teacher(request, pk):
-    teacher = Teacher.objects.get(pk=pk)
-    if request.method == 'POST':
-        teacher.delete()
-        return HttpResponseRedirect(reverse('teachers:list'))
-    else:
-        return render(request, 'confirmation.html', {'object': teacher})
+class DeleteTeacherView(DeleteView):
+    model = Teacher
+    success_url = reverse_lazy('teachers:list')
+    template_name = 'confirmation.html'

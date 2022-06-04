@@ -21,7 +21,7 @@
             </tr>
         </thead>
         <tbody id="tableData">
-        {% for group in groups %}
+        {% for group in object_list %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ group.group_name }}</td>
