@@ -15,8 +15,10 @@
                 <th scope="col">Course Name</th>
                 <th scope="col">Hours</th>
                 <th scope="col">Group</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                {% if user.is_authenticated %}
+                    <th scope="col" style="text-align: center">Edit</th>
+                    <th scope="col" style="text-align: center">Delete</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody id="tableData">
@@ -26,16 +28,18 @@
                 <td>{{ course.course_name }}</td>
                 <td>{{ course.hours }}</td>
                 <td>{{ course.group.group_name }} ({{ course.group.max_capacity }} attendants)</td>
-                <td>
-                    <a class="btn btn-outline-dark btn-sm" href="{% url 'courses:update' course.pk %}">
-                        <i class="bi bi-pencil-fill"></i>
-                    </a>
-                </td>
-                <td>
-                    <a class="btn btn-outline-dark btn-sm" href="{% url 'courses:delete' course.pk %}">
-                        <i class="bi bi-trash-fill"></i>
-                    </a>
-                </td>
+                {% if user.is_authenticated %}
+                    <td style="text-align: center">
+                        <a class="btn btn-outline-dark btn-sm" href="{% url 'courses:update' course.pk %}">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                    </td>
+                    <td style="text-align: center">
+                        <a class="btn btn-outline-dark btn-sm" href="{% url 'courses:delete' course.pk %}">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

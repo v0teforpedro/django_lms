@@ -42,16 +42,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'core.apps.CoreConfig',
-    'courses.apps.CoursesConfig',
-    'groups.apps.GroupsConfig',
-    'students.apps.StudentsConfig',
-    'teachers.apps.TeachersConfig',
-
     'debug_toolbar',
     'django_extensions',
     'crispy_bootstrap5',
     'crispy_forms',
+
+    'accounts.apps.AccountsConfig',
+    'core.apps.CoreConfig',
+    'courses.apps.CoursesConfig',
+    'groups.apps.GroupsConfig',
+    'students.apps.StudentsConfig',
+    'teachers.apps.TeachersConfig'
 ]
 
 MIDDLEWARE = [
@@ -157,3 +158,5 @@ INTERNAL_IPS = [
 if DEBUG:
     SHELL_PLUS = 'ipython'
     SHELL_PLUS_PRINT_SQL = True
+
+EMAIL_PORT = 1025       # to activate: 'python -m smtpd -n -c DebuggingServer localhost:1025'

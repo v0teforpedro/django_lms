@@ -16,8 +16,10 @@
                 <th scope="col">Last Name</th>
                 <th scope="col">Phone Number</th>
                 <th scope="col">Subject</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                {% if user.is_authenticated %}
+                    <th scope="col" style="text-align: center">Edit</th>
+                    <th scope="col" style="text-align: center">Delete</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody id="tableData">
@@ -28,16 +30,18 @@
                 <td>{{ teacher.last_name }}</td>
                 <td>{{ teacher.phone_number }}</td>
                 <td>{{ teacher.subject }}</td>
-                <td>
-                    <a class="btn btn-outline-dark btn-sm" href="{% url 'teachers:update' teacher.pk %}">
-                        <i class="bi bi-pencil-fill"></i>
-                    </a>
-                </td>
-                <td>
-                    <a class="btn btn-outline-dark btn-sm" href="{% url 'teachers:delete' teacher.pk %}">
-                        <i class="bi bi-trash-fill"></i>
-                    </a>
-                </td>
+                {% if user.is_authenticated %}
+                    <td style="text-align: center">
+                        <a class="btn btn-outline-dark btn-sm" href="{% url 'teachers:update' teacher.pk %}">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                    </td>
+                    <td style="text-align: center">
+                        <a class="btn btn-outline-dark btn-sm" href="{% url 'teachers:delete' teacher.pk %}">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>

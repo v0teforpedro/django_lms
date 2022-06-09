@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block main %}
+    <div class="container w-25">
+        <form method="post">
+            {% csrf_token %}
+            <div style="text-align: center">
+                <h2 class="account-heading">{{ user.username }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+            {{ user_form | crispy }}
+            {{ profile_form | crispy }}
+            <div class="mt-3" style="text-align: center">
+                <input class="btn btn-outline-success" type="submit" value="Update">
+                <a class="btn btn-outline-secondary" href="{% url 'accounts:profile' %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

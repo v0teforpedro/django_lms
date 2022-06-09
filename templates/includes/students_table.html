@@ -10,8 +10,10 @@
                 <th scope="col">Group</th>
             {% endif %}
             <th scope="col" style="text-align: center">Headman</th>
-            <th scope="col" style="text-align: center">Edit</th>
-            <th scope="col" style="text-align: center">Delete</th>
+            {% if user.is_authenticated %}
+                <th scope="col" style="text-align: center">Edit</th>
+                <th scope="col" style="text-align: center">Delete</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody id="tableData">
@@ -26,16 +28,18 @@
                 <td>{{ student.group.group_name}}</td>
             {% endif %}
             <td style="text-align: center">{% if student.headman_group %}<i class="bi bi-person-check"></i>{% endif %}</td>
-            <td style="text-align: center">
-                <a class="btn btn-outline-dark btn-sm" href="{% url 'students:update' student.pk %}">
-                    <i class="bi bi-pencil-fill"></i>
-                </a>
-            </td>
-            <td style="text-align: center">
-                <a class="btn btn-outline-dark btn-sm" href="{% url 'students:delete' student.pk %}">
-                    <i class="bi bi-trash-fill"></i>
-                </a>
-            </td>
+            {% if user.is_authenticated %}
+                <td style="text-align: center">
+                    <a class="btn btn-outline-dark btn-sm" href="{% url 'students:update' student.pk %}">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+                </td>
+                <td style="text-align: center">
+                    <a class="btn btn-outline-dark btn-sm" href="{% url 'students:delete' student.pk %}">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+                </td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

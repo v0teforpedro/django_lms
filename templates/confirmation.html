@@ -7,6 +7,9 @@
         {% csrf_token %}
         <h5 style="text-align: center">Please confirm data delete for: <b style="color: red">{{ object }}</b></h5>
         <br>
-        <button class="btn btn-outline-danger btn-bg" style="margin: auto; display: block" type="submit">Confirm</button>
+        <div style="text-align: center">
+            <button class="btn btn-outline-danger btn-lg" type="submit">Confirm</button>
+            <a class="btn btn-outline-secondary btn-lg" href="{% url 'index' %}">Abort</a>
+        </div>
     </form>
 {% endblock %}

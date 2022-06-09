@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block main %}
+    <div class="container w-25">
+        <form method="post">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <br>
+            <div class="d-flex justify-content-center">
+                <input class="btn btn-outline-primary" type="submit" value="Login">
+            </div>
+            <br>
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'password_reset' %}" style="text-decoration: none">Forgot password?</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
