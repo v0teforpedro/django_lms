@@ -28,7 +28,7 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ group.group_name }}</td>
                 <td>{{ group.headman.first_name }} {{ group.headman.last_name }}</td>
-                <td>{{ group.max_capacity }}</td>
+                <td>{{ group.student_count }}/{{ group.max_capacity }}</td>
                 <td>{{ group.group_course }}</td>
                 {% if user.is_authenticated %}
                     <td style="text-align: center">
