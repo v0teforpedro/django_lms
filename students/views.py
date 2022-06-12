@@ -1,59 +1,51 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from .forms import StudentCreateForm, StudentFilterForm, StudentUpdateForm
 from .models import Student
 
 
-def create_student(request):
-    if request.method == 'GET':
-        form = StudentCreateForm()
-    else:
-        form = StudentCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('students:list'))
-
-    return render(
-        request,
-        'students/create_student.html',
-        context={'title': 'Create Student', 'form': form}
-    )
+class CreateStudentView(CreateView):
+    model = Student
+    success_url = reverse_lazy('students:list')
+    template_name = 'students/create_student.html'
+    form_class = StudentCreateForm
+    extra_context = {'title': 'Create Student'}
 
 
-def students(request):
-    st = Student.objects.all().select_related('group', 'headman_group')
-    students_filter = StudentFilterForm(data=request.GET, queryset=st)
+class ListStudentView(ListView):
+    model = Student
+    template_name = 'students/students.html'
 
-    return render(
-        request,
-        'students/students.html',
-        context={'title': 'List of Students', 'students_filter': students_filter}
-    )
+    def get_queryset(self):
+        students_filter = StudentFilterForm(
+            data=self.request.GET,
+            queryset=self.model.objects.all().select_related('group', 'headman_group')
+        )
 
-
-def update_student(request, pk):
-    student = get_object_or_404(Student, pk=pk)
-    if request.method == 'GET':
-        form = StudentUpdateForm(instance=student)
-    else:
-        form = StudentUpdateForm(request.POST, instance=student)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('students:list'))
-
-    return render(
-        request,
-        'students/update_student.html',
-        context={'title': 'Update Student', 'form': form}
-    )
+        return students_filter
 
 
-def delete_student(request, pk):
-    student = Student.objects.get(pk=pk)
-    if request.method == 'POST':
-        student.delete()
-        return HttpResponseRedirect(reverse('students:list'))
-    else:
-        return render(request, 'confirmation.html', {'object': student})
+# def students(request):
+#     st = Student.objects.all().select_related('group', 'headman_group')
+#     students_filter = StudentFilterForm(data=request.GET, queryset=st)
+#
+#     return render(
+#         request,
+#         'students/students.html',
+#         context={'title': 'List of Students', 'students_filter': students_filter}
+#     )
+
+
+class UpdateStudentView(UpdateView):
+    model = Student
+    success_url = reverse_lazy('students:list')
+    template_name = 'students/update_student.html'
+    form_class = StudentUpdateForm
+    extra_context = {'title': 'Update Student'}
+
+
+class DeleteStudentView(DeleteView):
+    model = Student
+    success_url = reverse_lazy('students:list')
+    template_name = 'confirmation.html'

@@ -1,57 +1,33 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from .forms import CourseCreateForm
 from .models import Course
 
 
-def create_course(request):
-    if request.method == 'GET':
-        form = CourseCreateForm()
-    else:
-        form = CourseCreateForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('courses:list'))
-
-    return render(
-        request,
-        'courses/create_course.html',
-        context={'title': 'Create Course', 'form': form}
-    )
+class CreateCourseView(CreateView):
+    model = Course
+    success_url = reverse_lazy('groups:list')
+    template_name = 'courses/create_course.html'
+    form_class = CourseCreateForm
+    extra_context = {'title': 'Create Course'}
 
 
-def courses(request):
-    cs = Course.objects.all()
-    return render(
-        request,
-        'courses/courses.html',
-        context={'title': 'List of Courses', 'courses': cs}
-    )
+class ListCourseView(ListView):
+    model = Course
+    template_name = 'courses/courses.html'
+    extra_context = {'title': 'List of Courses'}
 
 
-def update_course(request, pk):
-    course = get_object_or_404(Course, pk=pk)
-    if request.method == 'GET':
-        form = CourseCreateForm(instance=course)
-    else:
-        form = CourseCreateForm(request.POST, instance=course)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('courses:list'))
-
-    return render(
-        request,
-        'courses/update_course.html',
-        context={'title': 'Update Course', 'form': form, 'course': course}
-    )
+class UpdateCourseView(UpdateView):
+    model = Course
+    success_url = reverse_lazy('courses:list')
+    template_name = 'courses/update_course.html'
+    form_class = CourseCreateForm
+    extra_context = {'title': 'Update Course'}
 
 
-def delete_course(request, pk):
-    course = Course.objects.get(pk=pk)
-    if request.method == 'POST':
-        course.delete()
-        return HttpResponseRedirect(reverse('courses:list'))
-    else:
-        return render(request, 'confirmation.html', {'object': course})
+class DeleteCourseView(DeleteView):
+    model = Course
+    success_url = reverse_lazy('courses:list')
+    template_name = 'confirmation.html'
