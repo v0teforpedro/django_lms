@@ -27,7 +27,7 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ course.course_name }}</td>
                 <td>{{ course.hours }}</td>
-                <td>{{ course.group.group_name }} ({{ course.group.max_capacity }} attendants)</td>
+                <td>{{ course.group.group_name }} ({{ course.group.student_count }}/{{ course.group.max_capacity }} attendants)</td>
                 {% if user.is_authenticated %}
                     <td style="text-align: center">
                         <a class="btn btn-outline-dark btn-sm" href="{% url 'courses:update' course.pk %}">

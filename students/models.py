@@ -2,6 +2,7 @@ import random
 
 from core.models import Person
 
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from groups.models import Group
@@ -29,3 +30,7 @@ class Student(Person):
         groups = Group.objects.all()
         obj.group = random.choice(groups)
         obj.save()
+
+    def clean(self):
+        if self.group.student_count >= self.group.max_capacity:
+            raise ValidationError('Sorry, this group is full already.')

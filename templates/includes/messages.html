@@ -1,0 +1,17 @@
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} text-center"
+         role="alert">
+        <i>{{ message }}</i>
+    </div>
+    {% endfor %}
+<script>
+    $(document).ready(function () {
+        window.setTimeout(function() {
+            $(".alert").fadeTo(2000, 0).slideUp(500, function(){
+                $(this).remove();
+            });
+        }, 4000);
+    });
+</script>
+{% endif %}

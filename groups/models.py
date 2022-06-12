@@ -31,8 +31,8 @@ class Group(models.Model):
         db_table = 'groups'
 
     def __str__(self):
-        return f'{self.group_name} (capacity: {self.max_capacity})'
+        return f'{self.group_name} (capacity: {self.student_count}/{self.max_capacity})'
 
-    # def clean(self):
-    #     if self.curr_students > self.max_capacity:
-    #         raise ValidationError('Amount of students in group exceeds its capacity.')
+    @property
+    def student_count(self):
+        return self.students.count()
