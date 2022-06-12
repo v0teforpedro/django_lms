@@ -6,13 +6,7 @@ from .models import Teacher
 class TeacherCreateForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        fields = [
-            'first_name',
-            'last_name',
-            'phone_number',
-            'subject',
-            'group'
-        ]
+        fields = '__all__'
 
     def clean_first_name(self):
         fn = self.cleaned_data['first_name']
@@ -23,6 +17,14 @@ class TeacherCreateForm(forms.ModelForm):
         return ln.title()
 
     def clean_phone_number(self):
-        pn = self.cleaned_data['phone_number']
-        output = "".join([character for character in pn if character.isdigit()])
-        return output
+        try:
+            pn = self.cleaned_data['phone_number']
+            output = "".join([character for character in pn if character.isdigit()])
+            return output
+        except TypeError:
+            pass
+
+
+class TeacherUpdateForm(TeacherCreateForm):
+    class Meta(TeacherCreateForm.Meta):
+        exclude = ['birthday']

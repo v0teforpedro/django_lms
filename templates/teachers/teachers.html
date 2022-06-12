@@ -16,7 +16,6 @@
                 <th scope="col">Last Name</th>
                 <th scope="col">Phone Number</th>
                 <th scope="col">Subject</th>
-                <th scope="col">Group</th>
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
             </tr>
@@ -29,7 +28,6 @@
                 <td>{{ teacher.last_name }}</td>
                 <td>{{ teacher.phone_number }}</td>
                 <td>{{ teacher.subject }}</td>
-                <td>{{ teacher.group }}</td>
                 <td>
                     <a class="btn btn-outline-dark btn-sm" href="{% url 'teachers:update' teacher.pk %}">
                         <i class="bi bi-pencil-fill"></i>

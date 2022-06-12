@@ -8,13 +8,7 @@ from .models import Student
 class StudentCreateForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = [
-            'first_name',
-            'last_name',
-            'phone_number',
-            'birthday',
-            'group'
-        ]
+        fields = '__all__'
 
         widgets = {
             'birthday': forms.DateInput(attrs={'type': 'date'})
@@ -29,9 +23,12 @@ class StudentCreateForm(forms.ModelForm):
         return ln.title()
 
     def clean_phone_number(self):
-        pn = self.cleaned_data['phone_number']
-        output = "".join([character for character in pn if character.isdigit()])
-        return output
+        try:
+            pn = self.cleaned_data['phone_number']
+            output = "".join([character for character in pn if character.isdigit()])
+            return output
+        except TypeError:
+            pass
 
 
 class StudentFilterForm(FilterSet):
@@ -41,3 +38,8 @@ class StudentFilterForm(FilterSet):
             'first_name': ['exact', 'icontains'],
             'last_name': ['exact', 'startswith'],
         }
+
+
+class StudentUpdateForm(StudentCreateForm):
+    class Meta(StudentCreateForm.Meta):
+        exclude = ['birthday']

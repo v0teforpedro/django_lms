@@ -13,7 +13,7 @@ class Command(BaseCommand):
         cnt = options['cnt']
 
         if cnt <= 100:
-            Teacher.gen_teachers(cnt)
+            Teacher.generate(cnt)
             self.stdout.write(self.style.SUCCESS(f'{cnt} teacher(s) created!'))
         else:
             raise CommandError('generator is capped at max 100 teachers per use')

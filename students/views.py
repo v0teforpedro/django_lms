@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from .forms import StudentCreateForm, StudentFilterForm
+from .forms import StudentCreateForm, StudentFilterForm, StudentUpdateForm
 from .models import Student
 
 
@@ -23,7 +23,7 @@ def create_student(request):
 
 
 def students(request):
-    st = Student.objects.all()
+    st = Student.objects.all().select_related('group', 'headman_group')
     students_filter = StudentFilterForm(data=request.GET, queryset=st)
 
     return render(
@@ -36,9 +36,9 @@ def students(request):
 def update_student(request, pk):
     student = get_object_or_404(Student, pk=pk)
     if request.method == 'GET':
-        form = StudentCreateForm(instance=student)
+        form = StudentUpdateForm(instance=student)
     else:
-        form = StudentCreateForm(request.POST, instance=student)
+        form = StudentUpdateForm(request.POST, instance=student)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('students:list'))
