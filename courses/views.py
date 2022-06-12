@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
@@ -5,7 +6,7 @@ from .forms import CourseCreateForm
 from .models import Course
 
 
-class CreateCourseView(CreateView):
+class CreateCourseView(LoginRequiredMixin, CreateView):
     model = Course
     success_url = reverse_lazy('groups:list')
     template_name = 'courses/create_course.html'
@@ -19,7 +20,7 @@ class ListCourseView(ListView):
     extra_context = {'title': 'List of Courses'}
 
 
-class UpdateCourseView(UpdateView):
+class UpdateCourseView(LoginRequiredMixin, UpdateView):
     model = Course
     success_url = reverse_lazy('courses:list')
     template_name = 'courses/update_course.html'
@@ -27,7 +28,7 @@ class UpdateCourseView(UpdateView):
     extra_context = {'title': 'Update Course'}
 
 
-class DeleteCourseView(DeleteView):
+class DeleteCourseView(LoginRequiredMixin, DeleteView):
     model = Course
     success_url = reverse_lazy('courses:list')
     template_name = 'confirmation.html'

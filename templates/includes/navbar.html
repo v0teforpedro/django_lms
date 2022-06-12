@@ -15,24 +15,51 @@
                 <li class="nav-item"><a class="nav-link" href="/teachers">Teachers</a></li>
                 <li class="nav-item"><a class="nav-link" href="/groups">Groups</a></li>
                 <li class="nav-item"><a class="nav-link" href="/courses">Courses</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Actions:
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="{% url 'students:create' %}">Create Student</a></li>
-                        <li><a class="dropdown-item" href="{% url 'teachers:create' %}">Create Teacher</a></li>
-                        <li><a class="dropdown-item" href="{% url 'groups:create' %}">Create Group</a></li>
-                        <li><a class="dropdown-item" href="{% url 'courses:create' %}">Create Course</a></li>
-                    </ul>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions:
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{% url 'students:create' %}">Create Student</a></li>
+                            <li><a class="dropdown-item" href="{% url 'teachers:create' %}">Create Teacher</a></li>
+                            <li><a class="dropdown-item" href="{% url 'groups:create' %}">Create Group</a></li>
+                            <li><a class="dropdown-item" href="{% url 'courses:create' %}">Create Course</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
             </ul>
         </div>
-        {% if '/teachers/' == request.path or '/students/' == request.path %}
-        <form class="d-flex" id="sidebar">
-            <button class="btn btn-outline-dark btn-sm" id="toggle" type="button">Search: On / Off</button>
+        <form class="row form-inline" id="sidebar">
+            <div class="col-auto">
+                {% if '/teachers/' == request.path or '/students/' == request.path or '/groups/' == request.path or '/courses/' == request.path %}
+                <button class="btn btn-outline-primary btn-sm" id="toggle" type="button">
+                    <i class="bi bi-search"></i>
+                </button>
+                {% endif %}
+            </div>
+            <div class="col-auto">
+                {% if user.is_authenticated %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+                            data-bs-display="static" aria-expanded="false">Account</button>
+                    <ul class="dropdown-menu dropdown-menu-lg-end">
+                        <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
+                    </ul>
+                </div>
+                {% else %}
+                    {% if '/accounts/registration/' != request.path %}
+                    <a class="btn btn-dark btn-sm" href="{% url 'accounts:registration' %}" role="button">Registration</a>
+                    {% endif %}
+                    {% if '/accounts/login/' != request.path %}
+                    <a class="btn btn-dark btn-sm" href="{% url 'accounts:login' %}" role="button">Login</a>
+                    {% endif %}
+                {% endif %}
+            </div>
         </form>
-        {% endif %}
     </div>
 </nav>
