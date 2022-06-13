@@ -1,3 +1,5 @@
+# from copy import copy
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
@@ -17,14 +19,29 @@ class CreateStudentView(LoginRequiredMixin, CreateView):
 class ListStudentView(ListView):
     model = Student
     template_name = 'students/students.html'
+    paginate_by = 10
 
-    def get_queryset(self):
-        students_filter = StudentFilterForm(
+    def get_filter(self):
+        return StudentFilterForm(
             data=self.request.GET,
             queryset=self.model.objects.all().select_related('group', 'headman_group')
         )
 
-        return students_filter
+    def get_queryset(self):
+        return self.get_filter().qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = self.get_filter().form
+
+        # params = self.request.GET
+        # if 'page' in params:
+        #     params = copy(params)
+        #     del params['page']
+        #
+        # context['params'] = f'&{params.urlencode()}' if params else ''
+
+        return context
 
 
 # def students(request):

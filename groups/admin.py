@@ -33,10 +33,21 @@ class StudentsInlineTable(admin.TabularInline):
 class TeachersInlineTable(admin.TabularInline):
     model = Group.teachers.through
     fields = [
-        'teacher'
+        'first_name',
+        'last_name',
+        'subject'
     ]
 
     extra = 0
+
+    def first_name(self, obj):
+        return obj.teacher.first_name
+
+    def last_name(self, obj):
+        return obj.teacher.last_name
+
+    def subject(self, obj):
+        return obj.teacher.subject
 
     readonly_fields = fields
 
