@@ -5,7 +5,8 @@
 {% block main %}
     <div class="container w-25">
         <div class="card mt-5">
-            <div class="card-body">
+            <div class="card-body text-center">
+                <img src="{{ user.profile.avatar.url }}" class="rounded-circle" height="200" width="200" alt="avatar">
                 <h5 class="card-title">{{ user.username }}</h5>
                 <p class="card-text"><i>{{ user.email }}</i></p>
             </div>

@@ -24,7 +24,7 @@
         <tbody id="tableData">
         {% for course in object_list %}
             <tr>
-                <th scope="row">{{ forloop.counter }}</th>
+                <th scope="row">{{ forloop.counter0|add:page_obj.start_index }}</th>
                 <td>{{ course.course_name }}</td>
                 <td>{{ course.hours }}</td>
                 <td>{{ course.group.group_name }} ({{ course.group.student_count }}/{{ course.group.max_capacity }} attendants)</td>

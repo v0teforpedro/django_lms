@@ -5,18 +5,21 @@
 {% block title %}Edit Profile{% endblock %}
 
 {% block main %}
-    <div class="container w-25">
-        <form method="post">
+    <div class="container w-50">
+        <form class="row" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div style="text-align: center">
-                <h2 class="account-heading">{{ user.username }}</h2>
+            <div class="col mt-3" style="text-align: center">
+                <img src="{{ user.profile.avatar.url }}" class="rounded-circle" height="200" width="200" alt="avatar">
+                <h2 class="account-heading mt-3">{{ user.username }}</h2>
                 <p class="text-secondary">{{ user.email }}</p>
             </div>
+            <div class="col mt-3">
             {{ user_form | crispy }}
             {{ profile_form | crispy }}
-            <div class="mt-3" style="text-align: center">
-                <input class="btn btn-outline-success" type="submit" value="Update">
-                <a class="btn btn-outline-secondary" href="{% url 'accounts:profile' %}">Cancel</a>
+                <div style="text-align: center">
+                    <input class="btn btn-outline-success" type="submit" value="Update">
+                    <a class="btn btn-outline-secondary" href="{% url 'accounts:profile' %}">Cancel</a>
+                </div>
             </div>
         </form>
     </div>

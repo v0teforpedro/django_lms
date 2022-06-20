@@ -18,6 +18,7 @@ class ListCourseView(ListView):
     model = Course
     template_name = 'courses/courses.html'
     extra_context = {'title': 'List of Courses'}
+    paginate_by = 10
 
 
 class UpdateCourseView(LoginRequiredMixin, UpdateView):

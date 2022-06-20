@@ -25,7 +25,7 @@
         <tbody id="tableData">
         {% for teacher in object_list %}
             <tr>
-                <th scope="row">{{ forloop.counter }}</th>
+                <th scope="row">{{ forloop.counter0|add:page_obj.start_index }}</th>
                 <td>{{ teacher.first_name }}</td>
                 <td>{{ teacher.last_name }}</td>
                 <td>{{ teacher.phone_number }}</td>
