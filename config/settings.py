@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_bootstrap5',
     'crispy_forms',
+    'django.contrib.flatpages',
+    'django.contrib.sites',
+    'ckeditor',
 
     'accounts.apps.AccountsConfig',
     'core.apps.CoreConfig',
@@ -65,7 +68,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'core.middlewares.TimeRequestMiddleware'
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'core.middlewares.TimeRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -137,9 +141,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static'
+# ]
+
+STATIC_ROOT = BASE_DIR / 'static'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -162,3 +171,7 @@ if DEBUG:
     SHELL_PLUS_PRINT_SQL = True
 
 EMAIL_PORT = 1025       # to activate: 'python -m smtpd -n -c DebuggingServer localhost:1025'
+
+SITE_ID = 1
+
+CKEDITOR_UPLOAD_PATH = '/uploads'

@@ -133,3 +133,9 @@ dmypy.json
 
 # migrations
 migrations/
+
+static/admin/
+static/ckeditor/
+static/css/
+static/debug_toolbar/
+static/django_extensions/
