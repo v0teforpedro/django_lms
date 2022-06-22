@@ -46,9 +46,10 @@
             </div>
             <div class="col-auto">
                 {% if user.is_authenticated %}
+                <img src="{{ user.profile.avatar.url }}" class="rounded-circle" width="30" height="30" alt="thumbnail">
                 <div class="btn-group">
                     <button type="button" class="btn btn-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown"
-                            data-bs-display="static" aria-expanded="false">Account</button>
+                            data-bs-display="static" aria-expanded="false">{{ user.username }} </button>
                     <ul class="dropdown-menu dropdown-menu-lg-end">
                         <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
                         <li><a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a></li>

@@ -18,6 +18,7 @@ class ListTeacherView(ListView):
     model = Teacher
     template_name = 'teachers/teachers.html'
     extra_context = {'title': 'List of Teachers'}
+    paginate_by = 10
 
 
 class UpdateTeacherView(LoginRequiredMixin, UpdateView):

@@ -45,6 +45,7 @@ class ListGroupView(ListView):
     model = Group
     template_name = 'groups/groups.html'
     extra_context = {'title': 'List of Groups'}
+    paginate_by = 10
 
 
 # def update_group(request, pk):

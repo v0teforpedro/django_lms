@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django.contrib.sites',
     'ckeditor',
+    'ckeditor_uploader',
 
     'accounts.apps.AccountsConfig',
     'core.apps.CoreConfig',
@@ -174,4 +175,4 @@ EMAIL_PORT = 1025       # to activate: 'python -m smtpd -n -c DebuggingServer lo
 
 SITE_ID = 1
 
-CKEDITOR_UPLOAD_PATH = '/uploads'
+CKEDITOR_UPLOAD_PATH = 'uploads/'
